@@ -1,0 +1,17 @@
+building m68k compiler with crosstool
+    501  cd /home/grantham/tmp/m68k-cross-work
+    505  unset CFLAGS
+    520  ct-ng list-samples  |grep m68k
+    521  ct-ng m68k-unknown-elf
+    525  setarch i686 ct-ng build
+    532  ct-ng menuconfig
+    533  setarch i686 ct-ng build
+
+generic 68K platform
+    ROM is at 0x4000000 and also at 0x0 on RESET
+    32MB RAM is at 0x8000000 to 0xA000000
+    IO is at 0xC000000
+	RAM_AT_0 = IO_BASE + 3; // write to here to make RAM be at 0 instead of ROM
+	OUTPUT_BYTE = IO_BASE + 0; // characters written are output
+	INPUT_READY_BYTE = IO_BASE + 1; // characters are ready to read
+	INPUT_BYTE = IO_BASE + 2; // character to read
