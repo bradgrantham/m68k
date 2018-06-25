@@ -1,13 +1,13 @@
 ENTRY(reset) /* code to call on reset */
 
 _ROM_START = 0x000000; /* should be where ROM is in high memory... */
-_ROM_LENGTH = 64K;
-_RAM_START = 0x800000; /* should be where ROM is in high memory... */
+_ROM_LENGTH = 128K;
+_RAM_START = 0x800000;
 _RAM_LENGTH = 2048K;
 
 _estack = _RAM_START + _RAM_LENGTH; /* On M68K, past the highest stack byte */ 
 
-_Min_Heap_Size = 0xD000;;      /* required amount of heap  */
+_Min_Heap_Size = 0x80000;;      /* required amount of heap  */
 _Min_Stack_Size = 0x400;; /* required amount of stack */
 
 MEMORY
