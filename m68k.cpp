@@ -568,6 +568,24 @@ bus_frontend bus;
 
 struct CPU68000
 {
+    /*
+    #define OPCODE_MASK 0xF000 
+    #define OPCODE_GROUP1 0x0000
+    #define OPCODE_GROUP2_BYTE 0x1000
+    #define OPCODE_GROUP2_LONG 0x2000
+    #define OPCODE_GROUP2_WORD 0x3000
+    #define OPCODE_GROUP3_ 0x3000
+
+    opcode = word & OPCODE_MASK;
+    switch(opcode) {
+	case OPCODE_LOGIC_AND_BITS:
+	    break;
+	case OPCODE_GROUP2_BYTE:
+	case OPCODE_GROUP2_WORD:
+	case OPCODE_GROUP2_LONG:
+	    break;
+    }
+    */
     unsigned long d[8], a[8], pc, sp, ccr;
 
     static const unsigned char X = 0x10;

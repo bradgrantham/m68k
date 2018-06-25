@@ -1,11 +1,13 @@
-building m68k compiler with crosstool
-    501  cd /home/grantham/tmp/m68k-cross-work
-    505  unset CFLAGS
-    520  ct-ng list-samples  |grep m68k
-    521  ct-ng m68k-unknown-elf
-    525  setarch i686 ct-ng build
-    532  ct-ng menuconfig
-    533  setarch i686 ct-ng build
+building m68k compiler with built and installed crosstool 1.23.0
+    build crosstool into ~/bin/crosstool, put that in PATH
+    % mkdir -p /home/grantham/tmp/m68k-cross-work
+    % cd /home/grantham/tmp/m68k-cross-work
+    % unset CFLAGS
+    % ct-ng list-samples  |grep m68k
+    % ct-ng m68k-unknown-elf
+    % setarch i686 ct-ng build
+    % ct-ng menuconfig # add goop
+    % setarch i686 ct-ng build
 
 generic 68K platform
     ROM is at 0x4000000 and also at 0x0 on RESET

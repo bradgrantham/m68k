@@ -1,8 +1,8 @@
 ENTRY(reset) /* code to call on reset */
 
 _estack = 0x9FFFFFC;
-_min_heap_size = 0x1000000; // 16MB
-_min_stack_size = 0x100000; // 1MB
+_min_heap_size = 0x1000000;
+_min_stack_size = 0x100000;
 
 MEMORY
 {

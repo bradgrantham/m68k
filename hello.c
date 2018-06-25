@@ -7,6 +7,8 @@
 #define INPUT_BYTE		(IO_BASE + 2)
 #define RAM_AT_0		(IO_BASE + 3)
 
+char hello2[] = "Hello also.\n";
+
 int main()
 {
     volatile unsigned char *p = (unsigned char *)OUTPUT_BYTE;
@@ -17,5 +19,14 @@ int main()
     *p = 'O';
     *p = '!';
     *p = '\n';
-    for(;;);
+
+    if(0) for(int i = 0; i < 12; i++)
+	*p = hello2[i];
 }
+
+void __io_putchar( char c )
+{
+    volatile unsigned char *p = (unsigned char *)OUTPUT_BYTE;
+    *p = 'H';
+}
+
