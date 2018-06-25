@@ -132,7 +132,7 @@ ssize_t read(int file, void *__buf, size_t len)
    return len;
 }
 
-int _open(char *path, int flags, ...)
+int open(const char *path, int flags, ...)
 {
 	/* Pretend like we always fail */
 	return -1;
