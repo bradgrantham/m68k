@@ -12,6 +12,8 @@
 #include <thread>
 #include <signal.h>
 
+#define ROM_SIZE (512 * 1024)
+
 extern "C" {
 #include "musashi/m68k.h"
 }
@@ -466,8 +468,8 @@ void initialize_audio_waveform()
 struct MAINboard : board_base
 {
     const int rom_base = 0x0; // XXX
-    const int rom_size = 128 * 1024;
-    std::array<unsigned char, 128 * 1024> rom;
+    const int rom_size = ROM_SIZE;
+    std::array<unsigned char, ROM_SIZE> rom;
 
     const int ram_base = 0x800000;
     const int ram_size = 2 * 1024 * 1024;
@@ -477,7 +479,7 @@ struct MAINboard : board_base
     {
     }
 
-    MAINboard(unsigned char rom_image[128 * 1024])
+    MAINboard(unsigned char rom_image[ROM_SIZE])
     {
         std::copy(rom_image, rom_image + rom_size, rom.begin());
     }
@@ -693,7 +695,7 @@ void cpu_instr_callback()
     static unsigned int pc;
     pc = m68k_get_reg(NULL, M68K_REG_PC);
 
-    if(0) {
+    if(1) {
 	static char buff[100];
 	static char buff2[100];
 	static unsigned int instr_size;
@@ -766,7 +768,7 @@ int main(int argc, char **argv)
     }
 
     char *romname = argv[0];
-    unsigned char b[128 * 1024];
+    unsigned char b[ROM_SIZE];
 
     if(!read_blob(romname, b, sizeof(b), true))
         exit(EXIT_FAILURE);
