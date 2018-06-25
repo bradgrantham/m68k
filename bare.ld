@@ -49,6 +49,39 @@ SECTIONS
         . = ALIGN(4);
     } >ROM
 
+    .ctors :
+    {
+	__CTOR_LIST__ = .;
+	/* gcc uses crtbegin.o to find the start of
+	   the constructors, so we make sure it is
+	   first.  Because this is a wildcard, it
+	   doesn't matter if the user does not
+	   actually link against crtbegin.o; the
+	   linker won't look for a file to match a
+	   wildcard.  The wildcard also means that it
+	   doesn't matter which directory crtbegin.o
+	   is in.  */
+	KEEP (*crtbegin.o(.ctors))
+	/* We don't want to include the .ctor section from
+	   from the crtend.o file until after the sorted ctors.
+	   The .ctor section from the crtend file contains the
+	   end of ctors marker and it must be last */
+	KEEP (*(EXCLUDE_FILE (*crtend.o ) .ctors))
+	KEEP (*(SORT(.ctors.*)))
+	KEEP (*(.ctors))
+	__CTOR_END__ = .;
+    } > ROM  
+
+    .dtors :
+    {
+	__DTOR_LIST__ = .;
+	KEEP (*crtbegin.o(.dtors))
+	KEEP (*(EXCLUDE_FILE (*crtend.o ) .dtors))
+	KEEP (*(SORT(.dtors.*)))
+	KEEP (*(.dtors))
+	__DTOR_END__ = .;
+    } > ROM
+
     .preinit_array     :
     {
         PROVIDE_HIDDEN (__preinit_array_start = .);
@@ -84,7 +117,7 @@ SECTIONS
         KEEP(*(.data))
         KEEP(*(.data*))
         . = ALIGN(4);	/* guaranteeing align-4 here means we can loop long words in startup.s */
-      _edata = .;        /* global symbol at data end */
+        _edata = .;        /* global symbol at data end */
     } >RAM AT> ROM
 
     /* This is used by the startup in order to initialize the .bss secion */

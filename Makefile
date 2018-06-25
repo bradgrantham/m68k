@@ -7,8 +7,18 @@ m68k: m68k.cpp musashi/m68kcpu.o musashi/m68kops.o musashi/m68kopnz.o musashi/m6
 hello.bin: hello.elf
 	$(TOOLROOT)/bin/m68k-none-elf-objcopy -O binary $< $@
 
-hello.elf: hello.o startup.s syscalls.o crti.S crtn.S
-	$(TOOLROOT)/bin/m68k-none-elf-g++ -Tbare.ld '-Wl,--gc-sections' $^ -o $@
+hello.elf: hello.o startup.o syscalls.o
+	$(TOOLROOT)/bin/m68k-none-elf-g++ -specs=m68k-none-elf.specs -Tbare.ld '-Wl,--no-undefined' $^ -o $@
+	# '-Wl,--gc-sections'
+
+crti.o: crti.s
+	$(TOOLROOT)/bin/m68k-none-elf-gcc -c crti.s
+
+crtn.o: crtn.s
+	$(TOOLROOT)/bin/m68k-none-elf-gcc -c crtn.s
+
+startup.o: startup.s
+	$(TOOLROOT)/bin/m68k-none-elf-gcc -c startup.s
 
 syscalls.o: syscalls.c
 	$(TOOLROOT)/bin/m68k-none-elf-gcc -std=c99 -Wall -Os -c syscalls.c
