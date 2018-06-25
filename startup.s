@@ -51,26 +51,31 @@ void reset()
 reset:
 	move.l #_estack,%a7
 
+	/* Call the system intitialization function.*/
+	/* jsr  init_board  */
+
 	move.l #_sidata,%a1
 	move.l #_edata,%d0
 	move.l #_sdata,%a0
+
 check_idata_copied:
 	cmp.l %d0,%a0
 	jne copy_more_idata
 	move.l #_sbss,%a0
 	move.l #_ebss,%d0
+
 check_bss_cleared:
 	cmp.l %a0,%d0
 	jne clear_more_bss
-
-	/* Call the system intitialization function.*/
-	/* jsr  init_board  */
 
 	/* Call static constructors */
 	jsr __libc_init_array
 
 	/* Call the application's entry point.*/
         jsr  main
+
+	/* Call static destructors */
+	jsr __libc_fini_array
 
 	/* halt (on 68000) */
 	stop #2700
