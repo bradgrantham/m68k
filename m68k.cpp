@@ -466,8 +466,8 @@ void initialize_audio_waveform()
 struct MAINboard : board_base
 {
     const int rom_base = 0x0; // XXX
-    const int rom_size = 32768;
-    std::array<unsigned char, 32768> rom;
+    const int rom_size = 128 * 1024;
+    std::array<unsigned char, 128 * 1024> rom;
 
     const int ram_base = 0x800000;
     const int ram_size = 2 * 1024 * 1024;
@@ -477,7 +477,7 @@ struct MAINboard : board_base
     {
     }
 
-    MAINboard(unsigned char rom_image[32768])
+    MAINboard(unsigned char rom_image[128 * 1024])
     {
         std::copy(rom_image, rom_image + rom_size, rom.begin());
     }
@@ -690,16 +690,18 @@ void make_hex(char* buff, unsigned int pc, unsigned int length)
 void cpu_instr_callback()
 {
 /* The following code would print out instructions as they are executed */
-    static char buff[100];
-    static char buff2[100];
-    static unsigned int pc;
-    static unsigned int instr_size;
+    if(1) {
+	static char buff[100];
+	static char buff2[100];
+	static unsigned int pc;
+	static unsigned int instr_size;
 
-    pc = m68k_get_reg(NULL, M68K_REG_PC);
-    instr_size = m68k_disassemble(buff, pc, M68K_CPU_TYPE_68000);
-    make_hex(buff2, pc, instr_size);
-    printf("E %03x: %-20s: %s\n", pc, buff2, buff);
-    fflush(stdout);
+	pc = m68k_get_reg(NULL, M68K_REG_PC);
+	instr_size = m68k_disassemble(buff, pc, M68K_CPU_TYPE_68000);
+	make_hex(buff2, pc, instr_size);
+	printf("E %03x: %-20s: %s\n", pc, buff2, buff);
+	fflush(stdout);
+    }
 }
 
 };
@@ -758,7 +760,7 @@ int main(int argc, char **argv)
     }
 
     char *romname = argv[0];
-    unsigned char b[32768];
+    unsigned char b[128 * 1024];
 
     if(!read_blob(romname, b, sizeof(b), true))
         exit(EXIT_FAILURE);
