@@ -33,7 +33,7 @@ void reset()
 	*datastore++ = *datainit++;
     }
 
-    unsigned int *_bss;
+    unsigned int *bss;
     
     bss = _sbss;
     while(bss != _ebss) {
@@ -72,7 +72,7 @@ check_bss_cleared:
 	/* Call the application's entry point.*/
         jsr  main
 
-	/* halt on 68000 */
+	/* halt (on 68000) */
 	stop #2700
 
 copy_more_idata:
