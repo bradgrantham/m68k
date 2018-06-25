@@ -7,26 +7,18 @@
 #define INPUT_BYTE		(IO_BASE + 2)
 #define RAM_AT_0		(IO_BASE + 3)
 
-char hello2[] = "Hello also.\n";
+char hello2[] = "Hello world!\n";
 
 int main()
 {
-    volatile unsigned char *p = (unsigned char *)OUTPUT_BYTE;
-    *p = 'H';
-    *p = 'E';
-    *p = 'L';
-    *p = 'L';
-    *p = 'O';
-    *p = '!';
-    *p = '\n';
-
-    for(int i = 0; i < 12; i++)
-	*p = hello2[i];
+    // for(int i = 0; i < 12; i++)
+	// putchar(hello2[i]);
+    puts(hello2);
 }
 
 void __io_putchar( char c )
 {
     volatile unsigned char *p = (unsigned char *)OUTPUT_BYTE;
-    *p = 'H';
+    *p = c;
 }
 

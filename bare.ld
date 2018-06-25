@@ -7,6 +7,9 @@ _RAM_LENGTH = 2048K;
 
 _estack = _RAM_START + _RAM_LENGTH; /* On M68K, past the highest stack byte */ 
 
+_Min_Heap_Size = 0xD000;;      /* required amount of heap  */
+_Min_Stack_Size = 0x400;; /* required amount of stack */
+
 MEMORY
 {
     ROM (rx)      : ORIGIN = _ROM_START, LENGTH = _ROM_LENGTH
@@ -98,4 +101,17 @@ SECTIONS
     } >RAM
 
     heap_low = .;
+
+    /* User_heap_stack section, used to check that there is enough RAM left */
+    ._user_heap_stack :
+    {
+        . = ALIGN(4);
+        PROVIDE ( end = . );
+        PROVIDE ( _end = . );
+        . = . + _Min_Heap_Size;
+        heap_top = .;
+        . = . + _Min_Stack_Size;
+        . = ALIGN(4);
+    } >RAM
+
 }
