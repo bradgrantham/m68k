@@ -37,7 +37,7 @@ void reset()
     
     bss = _sbss;
     while(bss != _ebss) {
-	*bss = 0;
+	*bss++ = 0;
     }
 }
 */

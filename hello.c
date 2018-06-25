@@ -20,7 +20,7 @@ int main()
     *p = '!';
     *p = '\n';
 
-    if(0) for(int i = 0; i < 12; i++)
+    for(int i = 0; i < 12; i++)
 	*p = hello2[i];
 }
 

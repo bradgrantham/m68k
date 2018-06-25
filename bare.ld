@@ -81,7 +81,7 @@ SECTIONS
         *(.data*)
       . = ALIGN(4);
       _edata = .;        /* global symbol at data end */
-    } >RAM
+    } >RAM AT> ROM
 
     /* This is used by the startup in order to initialize the .bss secion */
     .bss :
