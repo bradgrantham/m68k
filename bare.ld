@@ -1,7 +1,7 @@
 ENTRY(reset) /* code to call on reset */
 
 _ROM_START = 0x000000; /* should be where ROM is in high memory... */
-_ROM_LENGTH = 128K;
+_ROM_LENGTH = 1024K;
 _RAM_START = 0x800000;
 _RAM_LENGTH = 2048K;
 
@@ -29,8 +29,8 @@ SECTIONS
     .text :
     {
         . = ALIGN(4);
-        *(.text)
-        *(.text*)
+        KEEP(*(.text))
+        KEEP(*(.text*))
         /* *(.eh_frame) */
     
         KEEP (*(.init))
@@ -44,8 +44,8 @@ SECTIONS
     .rodata :
     {
         . = ALIGN(4);
-        *(.rodata)
-        *(.rodata*)
+        KEEP(*(.rodata))
+        KEEP(*(.rodata*))
         . = ALIGN(4);
     } >ROM
 
@@ -79,11 +79,11 @@ SECTIONS
     .data : 
     {
         . = ALIGN(4);
-	*(vtable)
+	KEEP(*(vtable))
         _sdata = .;        /* global symbol at data start */
-        *(.data)
-        *(.data*)
-      . = ALIGN(4);
+        KEEP(*(.data))
+        KEEP(*(.data*))
+        . = ALIGN(4);	/* guaranteeing align-4 here means we can loop long words in startup.s */
       _edata = .;        /* global symbol at data end */
     } >RAM AT> ROM
 
@@ -93,10 +93,10 @@ SECTIONS
 	. = ALIGN(4);
         _sbss = .;         /* define a global symbol at bss start */
         __bss_start__ = _sbss;
-        *(.bss)
-        *(.bss*)
-        *(COMMON)
-        . = ALIGN(4);
+        KEEP(*(.bss))
+        KEEP(*(.bss*))
+        KEEP(*(COMMON))
+        . = ALIGN(4);	/* guaranteeing align-4 here means we can loop long words in startup.s */
         _ebss = .;         /* define a global symbol at bss end */
         __bss_end__ = _ebss;
     } >RAM
