@@ -10,9 +10,7 @@ building m68k compiler with built and installed crosstool 1.23.0
     % setarch i686 ct-ng build
 
 generic 68K platform
-    ROM is at 0x4000000 and also at 0x0 on RESET
-    32MB RAM is at 0x8000000 to 0xA000000
-    IO is at 0xC000000
+    See bare.ld for ROM, RAM base and see m68k.cpp for IO base
 	RAM_AT_0 = IO_BASE + 3; // write to here to make RAM be at 0 instead of ROM
 	OUTPUT_BYTE = IO_BASE + 0; // characters written are output
 	INPUT_READY_BYTE = IO_BASE + 1; // characters are ready to read
