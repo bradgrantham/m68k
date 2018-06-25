@@ -69,12 +69,12 @@ void initialise_monitor_handles()
 {
 }
 
-int _getpid(void)
+int getpid(void)
 {
 	return 1;
 }
 
-int _kill(int pid, int sig)
+int kill(int pid, int sig)
 {
 	errno = EINVAL;
 	return -1;
@@ -82,7 +82,7 @@ int _kill(int pid, int sig)
 
 void _exit (int status)
 {
-	_kill(status, -1);
+	kill(status, -1);
 	while (1) {}
 }
 
