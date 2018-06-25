@@ -27,7 +27,7 @@ struct blarg
 
 int main()
 {
-    // blarg blar;
+    blarg blar;
 
     puts(hello2);
 
@@ -38,9 +38,12 @@ int main()
 	printf("%d\n", foo[i]);
 }
 
+extern "C" {
+
 void __io_putchar( char c )
 {
     volatile unsigned char *p = (unsigned char *)OUTPUT_BYTE;
     *p = c;
 }
 
+}

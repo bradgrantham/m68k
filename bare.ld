@@ -79,6 +79,7 @@ SECTIONS
     .data : 
     {
         . = ALIGN(4);
+	*(vtable)
         _sdata = .;        /* global symbol at data start */
         *(.data)
         *(.data*)

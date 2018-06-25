@@ -690,17 +690,23 @@ void make_hex(char* buff, unsigned int pc, unsigned int length)
 void cpu_instr_callback()
 {
 /* The following code would print out instructions as they are executed */
-    if(1) {
+    static unsigned int pc;
+    pc = m68k_get_reg(NULL, M68K_REG_PC);
+
+    if(0) {
 	static char buff[100];
 	static char buff2[100];
-	static unsigned int pc;
 	static unsigned int instr_size;
 
-	pc = m68k_get_reg(NULL, M68K_REG_PC);
 	instr_size = m68k_disassemble(buff, pc, M68K_CPU_TYPE_68000);
 	make_hex(buff2, pc, instr_size);
 	printf("E %03x: %-20s: %s\n", pc, buff2, buff);
 	fflush(stdout);
+    }
+
+    if(m68k_read_memory_16(pc) == 0x4E72) { // STOP
+	printf("STOP instruction executed.\n");
+	exit(0);
     }
 }
 
