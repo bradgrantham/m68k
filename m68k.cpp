@@ -790,7 +790,7 @@ int main(int argc, char **argv)
         reset68000();
     }
 
-    chrono::time_point<chrono::system_clock> then = std::chrono::system_clock::now();
+    // chrono::time_point<chrono::system_clock> then = std::chrono::system_clock::now();
 
     while(1) {
         if(!debugging) {
