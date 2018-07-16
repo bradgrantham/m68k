@@ -8,7 +8,13 @@ m68k: m68k.cpp musashi/m68kcpu.o musashi/m68kops.o musashi/m68kopnz.o musashi/m6
 hello.bin: hello.elf
 	$(TOOLROOT)/bin/m68k-none-elf-objcopy -O binary $< $@
 
+# Can't put crti and crtn in here because then they would be linked in
+# the wrong order.
 OBJECTS		=	hello.o startup.o syscalls.o
+
+clean:
+	rm m68k hello.bin hello.elf $(OBJECTS) crti.o crtn.o 
+
 hello.elf: $(OBJECTS) crti.o crtn.o bare.ld
 	$(TOOLROOT)/bin/m68k-none-elf-g++ -specs=m68k-none-elf.specs -Tbare.ld '-Wl,--no-undefined' $(OBJECTS) -o $@
 	# '-Wl,--gc-sections'
