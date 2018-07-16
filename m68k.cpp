@@ -12,7 +12,7 @@
 #include <thread>
 #include <signal.h>
 
-#define ROM_SIZE (512 * 1024)
+#define ROM_SIZE (1024 * 1024)
 
 extern "C" {
 #include "musashi/m68k.h"
