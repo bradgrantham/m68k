@@ -10,6 +10,7 @@
 #include <deque>
 #include <map>
 #include <thread>
+#include <functional>
 #include <signal.h>
 
 #define ROM_SIZE (512 * 1024)
