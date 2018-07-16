@@ -1,5 +1,6 @@
 TOOLROOT	=	/home/grantham/x-tools/m68k-none-elf
 
+default: m68k hello.bin
 
 m68k: m68k.cpp musashi/m68kcpu.o musashi/m68kops.o musashi/m68kopnz.o musashi/m68kopac.o musashi/m68kopdm.o musashi/m68kdasm.o
 	g++ -g -Wall -std=c++11 $^ -o $@
@@ -7,8 +8,9 @@ m68k: m68k.cpp musashi/m68kcpu.o musashi/m68kops.o musashi/m68kopnz.o musashi/m6
 hello.bin: hello.elf
 	$(TOOLROOT)/bin/m68k-none-elf-objcopy -O binary $< $@
 
-hello.elf: hello.o startup.o syscalls.o
-	$(TOOLROOT)/bin/m68k-none-elf-g++ -specs=m68k-none-elf.specs -Tbare.ld '-Wl,--no-undefined' $^ -o $@
+OBJECTS		=	hello.o startup.o syscalls.o
+hello.elf: $(OBJECTS) crti.o crtn.o bare.ld
+	$(TOOLROOT)/bin/m68k-none-elf-g++ -specs=m68k-none-elf.specs -Tbare.ld '-Wl,--no-undefined' $(OBJECTS) -o $@
 	# '-Wl,--gc-sections'
 
 crti.o: crti.s
