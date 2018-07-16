@@ -42,7 +42,7 @@ int main()
     for(int i = 0; i < 5; i++)
 	printf("%d\n", foo[i]);
 
-    printf("blorg's address is %p, member s is \"%s\"\n", blorg, blorg.s.c_str());
+    printf("blorg's address is %p, member s is \"%s\"\n", &blorg, blorg.s.c_str());
 }
 
 extern "C" {
